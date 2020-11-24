@@ -96,20 +96,20 @@ import (
 )
   func main() {
 	app := hydra.NewApp(
-		hydra.WithServerTypes(http.API),
-		hydra.WithRegistry("lm://."),
-		hydra.WithPlatName("oms"),
-		hydra.WithSystemName("apiserver"),
-		hydra.WithClusterName("prod"),
-		hydra.WithVersion("1.2.0"),
-		hydra.WithUsage("api接口服务"),
+            hydra.WithPlatName("oms"), //必须
+            hydra.WithServerTypes(http.API),//必须
+            hydra.WithRegistry("lm://."), //可空，默认值为:lm://.		
+            hydra.WithSystemName("apiserver"), //可空，默认值为当前应用名称
+            hydra.WithClusterName("prod"), //可空，默认值为:prod
+            hydra.WithVersion("1.2.0"), //可空，默认值为:1.0.0
+            hydra.WithUsage("api接口服务"), //可空
 	)
 	app.API("/request", request)
 	app.Start()
 }
 
 ```
-为便于快速定位问题，日志根据级别显示不同颜色：
+为便于调试，日志根据级别显示为不同颜色：
 
 ```go
 func request(ctx hydra.IContext) interface{} {
@@ -130,3 +130,77 @@ $ ./apiserver run
 $ curl http://localhost:8080/request
 ```
 ![日志](./imgs/log.png)
+
+#### 二、生产环境(service)
+
+##### 1. 安装服务
+
+```sh
+$ ./apiserver install --help
+NAME:
+   apiserver install - 安装服务，以服务方式安装到本地系统
+
+USAGE:
+   apiserver install [command options] [arguments...]
+
+OPTIONS:
+   --registry value, -r value      -注册中心地址。格式：proto://host。如：zk://ip1,ip2  或 fs://../ [$registry]
+   --name value, -n value          -服务全名，格式：/平台名称/系统名称/服务器类型/集群名称 [$name]
+   --plat value, -p value          -平台名称
+   --system value, -s value        -系统名称,默认为当前应用程序名称
+   --server-types value, -S value  -服务类型，有api,web,rpc,cron,mqc,ws
+   --cluster value, -c value       -集群名称，默认值为：prod
+   --cover, -v                     -覆盖安装，本地已安装服务
+
+```
+安装参数与`run`参数基本一致，因为服务启动过程实际上是通过后台的方式执行`run`命令。
+
+```sh
+$  ./apiserver install
+Install apiserver                                      [  OK  ]
+```
+
+
+##### 2. 启动服务
+
+```sh
+$ ./apiserver start --help
+NAME:
+   apiserver start - 启动服务，以后台方式运行服务
+USAGE:
+   apiserver start [arguments...]
+```
+
+无需任何参数即可启动服务：
+
+```sh
+$   ./apiserver start
+Start apiserver                                        [  OK  ]
+```
+服务通过后台方式启动成功！
+> 由于本示例并未执行配置安装(将服务器配置安装到注册中心)，所以注册中心(registry)只能是"lm://."(本地内存)才能启动成功。
+
+>使用其它注册中心(zookeeper、etcd、redis、fs等)需先执行`apiserver conf install ....`命令安装配置或手工创建配置，方能启动成功。
+
+##### 3. 查看状态
+```sh
+$   ./apiserver status
+Status apiserver Running                                       [  OK  ]
+```
+服务正在运行！
+
+##### 4. 停止服务
+
+```sh
+$  ./apiserver stop
+Stop apiserver                                         [  OK  ]
+```
+再次查看服务已关闭:
+$  ./apiserver status
+Status apiserver Stopped                                       [  OK  ]
+
+##### 5. 卸载服务
+```sh
+$  ./apiserver remove
+Remove apiserver                                       [  OK  ]
+```
