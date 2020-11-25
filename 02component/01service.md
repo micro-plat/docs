@@ -15,6 +15,7 @@
 
 
 |----apiserver
+
 |----------- main.go
 
 ```go
@@ -86,7 +87,7 @@ OPTIONS:
    --trace value, -t value         -性能分析。支持:cpu,mem,block,mutex,web
    --tport value, --tp value       -性能分析服务端口号。用于trace为web模式时的端口号。默认：19999
 ```
-以上参数可以通过代码方式设置：
+以上参数可通过代码设置：
 ```go
 package main
 
@@ -108,10 +109,6 @@ import (
 	app.Start()
 }
 
-```
-为便于调试，日志根据级别显示为不同颜色：
-
-```go
 func request(ctx hydra.IContext) interface{} {
 	ctx.Log().Debug("调试信息")
 	ctx.Log().Info("一般信息")
