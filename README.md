@@ -61,6 +61,8 @@ Basic Auth、API KEY、Cookie, JWT等安全认证。
 
 [服务运行](/02component/01service.md)
 
+[配置中心](/02component/02conf.md)
+
 ## 一、示例
 
 - ### 1. 构建API服务
