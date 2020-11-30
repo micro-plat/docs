@@ -128,6 +128,6 @@ $ ./apiserver conf show
  指通过三方工具远程连接到配置中心配置：
  zookeeper推荐使用工具:
 
-![zooInspector](./imgs/zooInspector.png)
+![zooInspector](../02component/imgs/zooInspector.png)
 
 
