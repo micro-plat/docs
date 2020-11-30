@@ -15,7 +15,7 @@
 * 5. local memory 示例: lm://.
 
 
-注意：目前配置中心与注册中心共用同一服务器。
+注意：目前配置中心与配置中心共用同一服务器。
 
 #### 1). 配置分类
 服务器启动、运行期间的配置信息，分为三类：
@@ -48,9 +48,9 @@ hydra.OnReady(func() {
 
 #### 3). 配置安装
 
-除`lm`无须进行安装外，其它注册中心都需要预先安装服务器才能启动。
+除`lm`无须安装外，其它配置中心需先安装才能启动。
 
-注意：配置安装与服务启动是两个独立的过程。配置安装的目的是在注册中心生成正确可用的配置，服务启动是从注册中心拉取配置进行服务初始化。两个过程发生在不同时间，一前一后。 由于`lm`兼具有本地调试的便利性，故将两个过程合二为一，由系统自动完成。其它注册中心必须通过命令方式或手工方式预先创建好配置。
+注意：配置安装与服务启动是两个独立的过程。配置安装的目的是在配置中心生成正确可用的配置，服务启动是从配置中心拉取配置进行服务初始化。两个过程发生在不同时间，一前一后。 由于`lm`具有本地调试的便利性，故将两个过程合二为一，由系统自动完成。
 
 
 
@@ -60,13 +60,13 @@ hydra.OnReady(func() {
 ```sh
 $ ./apiserver conf install --help
 NAME:
-   apiserver conf install - -安装配置，将配置信息安装到注册中心
+   apiserver conf install - -安装配置，将配置信息安装到配置中心
 
 USAGE:
    apiserver conf install [command options] [arguments...]
 
 OPTIONS:
-   --registry value, -r value      -注册中心地址。格式：proto://host。如：zk://ip1,ip2  或 fs://../ 
+   --registry value, -r value      -配置中心地址。格式：proto://host。如：zk://ip1,ip2  或 fs://../ 
    --name value, -n value          -服务全名，格式：/平台名称/系统名称/服务器类型/集群名称
    --plat value, -p value          -平台名称
    --system value, -s value        -系统名称,默认为当前应用程序名称
@@ -75,7 +75,7 @@ OPTIONS:
    --cover, -v                     -覆盖配置，覆盖配置中心和本地服务
 ```
 
-根据参数要求即可将本地代码设置的配置信息安装到注册中心。
+根据参数要求即可将本地代码设置的配置信息安装到配置中心。
 
 示例:
 ```go
@@ -125,7 +125,7 @@ $ ./apiserver conf show
 ```
 
 * 2). 手动配置
- 指通过三方工具远程连接到注册中心配置：
+ 指通过三方工具远程连接到配置中心配置：
  zookeeper推荐使用工具:
 
 ![zooInspector](./imgs/zooInspector.png)
