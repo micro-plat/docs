@@ -24,6 +24,6 @@ var mgrweb embed.FS
 
 func init() {
 	//设置配置参数
-	hydra.Conf.Web("80").Header(header.WithCrossDomain()).
+	hydra.Conf.Web("8080").Header(header.WithCrossDomain()).
 		Static(static.WithAutoRewrite(), static.WithEmbed("web", mgrweb))
 }
